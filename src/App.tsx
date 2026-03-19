@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Vault from "./pages/Vault";
 import Withdraw from "./pages/Withdraw";
 import Activity from "./pages/Activity";
-import Admin from "./pages/Admin";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
