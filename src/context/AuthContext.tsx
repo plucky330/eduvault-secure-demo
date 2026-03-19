@@ -31,8 +31,8 @@ export const useAuth = () => {
 
 const DEMO_USER: User = {
   id: "usr_8k2m4n6p",
-  email: "demo@eduvault.io",
-  name: "Alex Morgan",
+  email: "franklin.taipe",
+  name: "Franklin Taipe",
   role: "user",
   joinedAt: "2024-09-15T10:30:00Z",
   lastLogin: new Date().toISOString(),
@@ -56,12 +56,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [needs2FA, setNeeds2FA] = useState(false);
   const [pendingUser, setPendingUser] = useState<User | null>(null);
 
-  const login = useCallback(async (email: string, _password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     await new Promise((r) => setTimeout(r, 800));
-    const u = email.includes("admin") ? ADMIN_USER : { ...DEMO_USER, email };
-    setPendingUser(u);
-    setNeeds2FA(true);
-    return true;
+    if (email === "franklin.taipe" && password === "Peru@2030") {
+      setPendingUser(DEMO_USER);
+      setNeeds2FA(true);
+      return true;
+    }
+    return false;
   }, []);
 
   const signup = useCallback(async (name: string, email: string, _password: string) => {

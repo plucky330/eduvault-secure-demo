@@ -37,41 +37,31 @@ export interface Notification {
 }
 
 export const demoBalance = {
-  total: 50000,
-  available: 32500,
-  locked: 17500,
+  total: 35000,
+  available: 0,
+  locked: 35000,
 };
 
 export const demoLocks: VaultLock[] = [
   {
     id: "lk_001",
     code: "EV-LOCK-93XK2045",
-    amount: 10000,
-    duration: "6 months",
-    startDate: "2025-01-15T00:00:00Z",
-    endDate: "2025-07-15T00:00:00Z",
+    amount: 20000,
+    duration: "1 year",
+    startDate: "2025-06-01T00:00:00Z",
+    endDate: "2026-06-01T00:00:00Z",
     status: "active",
     unlockMethods: ["passphrase", "2fa"],
   },
   {
     id: "lk_002",
     code: "EV-LOCK-7BM9F312",
-    amount: 7500,
-    duration: "1 year",
-    startDate: "2025-02-01T00:00:00Z",
-    endDate: "2026-02-01T00:00:00Z",
+    amount: 15000,
+    duration: "2 years",
+    startDate: "2025-03-01T00:00:00Z",
+    endDate: "2027-03-01T00:00:00Z",
     status: "active",
     unlockMethods: ["file", "passphrase", "2fa"],
-  },
-  {
-    id: "lk_003",
-    code: "EV-LOCK-X4NP8821",
-    amount: 5000,
-    duration: "3 months",
-    startDate: "2024-10-01T00:00:00Z",
-    endDate: "2025-01-01T00:00:00Z",
-    status: "expired",
-    unlockMethods: ["voice", "2fa"],
   },
 ];
 
@@ -86,14 +76,7 @@ export const demoActivity: ActivityLog[] = [
   { id: "a8", type: "login", message: "Login from new device detected", timestamp: "2026-03-15T09:10:00Z", device: "Edge 120 / Windows", ip: "10.0.0.15", status: "success" },
 ];
 
-export const demoTransactions: Transaction[] = [
-  { id: "TX-8392741", type: "lock", amount: 10000, date: "2026-03-18", status: "completed" },
-  { id: "TX-6271834", type: "withdrawal", amount: 2500, date: "2026-03-17", status: "completed" },
-  { id: "TX-9182635", type: "lock", amount: 7500, date: "2026-03-15", status: "completed" },
-  { id: "TX-3748291", type: "unlock", amount: 5000, date: "2026-03-14", status: "completed" },
-  { id: "TX-5829174", type: "withdrawal", amount: 1500, date: "2026-03-12", status: "pending" },
-  { id: "TX-1928374", type: "lock", amount: 3000, date: "2026-03-10", status: "completed" },
-];
+export const demoTransactions: Transaction[] = [];
 
 export const demoNotifications: Notification[] = [
   { id: "n1", title: "Security Alert", message: "Unauthorized access attempt was blocked from IP 203.45.67.89", type: "security", read: false, timestamp: "2026-03-18T22:15:00Z" },
@@ -103,12 +86,12 @@ export const demoNotifications: Notification[] = [
 ];
 
 export const demoChartData = [
-  { month: "Oct", locked: 5000, available: 45000 },
-  { month: "Nov", locked: 8000, available: 42000 },
-  { month: "Dec", locked: 12000, available: 38000 },
-  { month: "Jan", locked: 15000, available: 35000 },
-  { month: "Feb", locked: 17500, available: 32500 },
-  { month: "Mar", locked: 17500, available: 32500 },
+  { month: "Oct", locked: 35000, available: 0 },
+  { month: "Nov", locked: 35000, available: 0 },
+  { month: "Dec", locked: 35000, available: 0 },
+  { month: "Jan", locked: 35000, available: 0 },
+  { month: "Feb", locked: 35000, available: 0 },
+  { month: "Mar", locked: 35000, available: 0 },
 ];
 
 export const demoAdminUsers = [

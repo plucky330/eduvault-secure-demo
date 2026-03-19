@@ -1,11 +1,11 @@
 import { useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
 import { demoBalance } from "@/data/mockData";
-import { ArrowRight, CheckCircle2, Loader2, Shield } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2, Shield, AlertTriangle, Link2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
-type Step = "amount" | "unlock" | "otp" | "confirm" | "complete";
+type Step = "amount" | "destination" | "unlock" | "otp" | "confirm" | "complete";
 
 const Withdraw = () => {
   const [step, setStep] = useState<Step>("amount");
@@ -13,16 +13,27 @@ const Withdraw = () => {
   const [passphrase, setPassphrase] = useState("");
   const [otp, setOtp] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [binanceLinking, setBinanceLinking] = useState(false);
+  const [binanceError, setBinanceError] = useState(false);
   const txId = `TX-${Math.random().toString(36).slice(2, 9).toUpperCase()}`;
 
   const steps: { key: Step; label: string }[] = [
     { key: "amount", label: "Amount" },
+    { key: "destination", label: "Destination" },
     { key: "unlock", label: "Verify" },
     { key: "otp", label: "OTP" },
     { key: "confirm", label: "Confirm" },
   ];
 
   const currentIdx = steps.findIndex((s) => s.key === step);
+
+  const handleBinanceLink = async () => {
+    setBinanceLinking(true);
+    setBinanceError(false);
+    await new Promise((r) => setTimeout(r, 2500));
+    setBinanceLinking(false);
+    setBinanceError(true);
+  };
 
   const handleConfirm = async () => {
     setProcessing(true);
@@ -83,12 +94,92 @@ const Withdraw = () => {
                 ))}
               </div>
               <button
-                onClick={() => amount && setStep("unlock")}
+                onClick={() => amount && setStep("destination")}
                 disabled={!amount}
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
               >
                 Continue <ArrowRight className="w-4 h-4" />
               </button>
+            </motion.div>
+          )}
+
+          {step === "destination" && (
+            <motion.div key="destination" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="glass p-8">
+              <h3 className="text-lg font-semibold text-foreground mb-2">Select Destination</h3>
+              <p className="text-sm text-muted-foreground mb-6">Link your exchange account to withdraw funds</p>
+
+              <div className="space-y-4">
+                {/* Binance option */}
+                <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-[hsl(45,100%,51%)]/10 flex items-center justify-center">
+                        <span className="text-lg font-bold text-[hsl(45,100%,51%)]">B</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Binance</p>
+                        <p className="text-xs text-muted-foreground">Link your Binance account</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleBinanceLink}
+                      disabled={binanceLinking}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+                    >
+                      {binanceLinking ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> Linking...</>
+                      ) : (
+                        <><Link2 className="w-4 h-4" /> Link Account</>
+                      )}
+                    </button>
+                  </div>
+
+                  <AnimatePresence>
+                    {binanceError && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="flex items-start gap-3 p-3 rounded-lg bg-destructive/10 border border-destructive/20"
+                      >
+                        <AlertTriangle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-medium text-destructive">Connection Failed</p>
+                          <p className="text-xs text-destructive/80 mt-1">
+                            Failed to link Binance account. Please try on a different region. This service is currently unavailable in your area.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Bank Transfer (disabled) */}
+                <div className="p-4 rounded-lg border border-border bg-secondary/10 opacity-50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Bank Transfer</p>
+                      <p className="text-xs text-muted-foreground">Coming soon</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button onClick={() => setStep("amount")} className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium">
+                  Back
+                </button>
+                <button
+                  onClick={() => setStep("unlock")}
+                  disabled
+                  className="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  Continue <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </motion.div>
           )}
 
@@ -104,7 +195,7 @@ const Withdraw = () => {
                 className="w-full px-4 py-3 rounded-lg bg-secondary border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 mb-6"
               />
               <div className="flex gap-3">
-                <button onClick={() => setStep("amount")} className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium">
+                <button onClick={() => setStep("destination")} className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium">
                   Back
                 </button>
                 <button
@@ -178,7 +269,7 @@ const Withdraw = () => {
               <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">Completed</span>
               <div className="mt-8">
                 <button
-                  onClick={() => { setStep("amount"); setAmount(""); setPassphrase(""); setOtp(""); }}
+                  onClick={() => { setStep("amount"); setAmount(""); setPassphrase(""); setOtp(""); setBinanceError(false); }}
                   className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 transition-colors"
                 >
                   New Withdrawal

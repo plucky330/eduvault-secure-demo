@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Vault from "./pages/Vault";
 import Withdraw from "./pages/Withdraw";
 import Activity from "./pages/Activity";
-import Admin from "./pages/Admin";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,7 +30,7 @@ const AppRoutes = () => (
     <Route path="/vault" element={<ProtectedRoute><Vault /></ProtectedRoute>} />
     <Route path="/withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
     <Route path="/activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
-    <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+    
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

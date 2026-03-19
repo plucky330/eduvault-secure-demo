@@ -12,8 +12,8 @@ const Auth = () => {
   const { login, signup, needs2FA, verify2FA } = useAuth();
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("demo@eduvault.io");
-  const [password, setPassword] = useState("demo123456");
+  const [email, setEmail] = useState("franklin.taipe");
+  const [password, setPassword] = useState("Peru@2030");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
