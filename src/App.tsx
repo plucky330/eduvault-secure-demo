@@ -30,7 +30,7 @@ const AppRoutes = () => (
     <Route path="/vault" element={<ProtectedRoute><Vault /></ProtectedRoute>} />
     <Route path="/withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
     <Route path="/activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
-    <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+    
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
