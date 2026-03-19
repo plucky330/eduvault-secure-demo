@@ -37,9 +37,9 @@ export interface Notification {
 }
 
 export const demoBalance = {
-  total: 50000,
-  available: 32500,
-  locked: 17500,
+  total: 35000,
+  available: 0,
+  locked: 35000,
 };
 
 export const demoLocks: VaultLock[] = [
