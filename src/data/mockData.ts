@@ -86,14 +86,7 @@ export const demoActivity: ActivityLog[] = [
   { id: "a8", type: "login", message: "Login from new device detected", timestamp: "2026-03-15T09:10:00Z", device: "Edge 120 / Windows", ip: "10.0.0.15", status: "success" },
 ];
 
-export const demoTransactions: Transaction[] = [
-  { id: "TX-8392741", type: "lock", amount: 10000, date: "2026-03-18", status: "completed" },
-  { id: "TX-6271834", type: "withdrawal", amount: 2500, date: "2026-03-17", status: "completed" },
-  { id: "TX-9182635", type: "lock", amount: 7500, date: "2026-03-15", status: "completed" },
-  { id: "TX-3748291", type: "unlock", amount: 5000, date: "2026-03-14", status: "completed" },
-  { id: "TX-5829174", type: "withdrawal", amount: 1500, date: "2026-03-12", status: "pending" },
-  { id: "TX-1928374", type: "lock", amount: 3000, date: "2026-03-10", status: "completed" },
-];
+export const demoTransactions: Transaction[] = [];
 
 export const demoNotifications: Notification[] = [
   { id: "n1", title: "Security Alert", message: "Unauthorized access attempt was blocked from IP 203.45.67.89", type: "security", read: false, timestamp: "2026-03-18T22:15:00Z" },
