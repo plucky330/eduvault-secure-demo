@@ -13,7 +13,6 @@ const navItems = [
   { path: "/vault", label: "Vault Lock", icon: Lock },
   { path: "/withdraw", label: "Withdrawal", icon: ArrowDownToLine },
   { path: "/activity", label: "Activity Logs", icon: ScrollText },
-  { path: "/admin", label: "Admin Panel", icon: Shield },
 ];
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
