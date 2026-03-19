@@ -96,12 +96,12 @@ export const demoNotifications: Notification[] = [
 ];
 
 export const demoChartData = [
-  { month: "Oct", locked: 5000, available: 45000 },
-  { month: "Nov", locked: 8000, available: 42000 },
-  { month: "Dec", locked: 12000, available: 38000 },
-  { month: "Jan", locked: 15000, available: 35000 },
-  { month: "Feb", locked: 17500, available: 32500 },
-  { month: "Mar", locked: 17500, available: 32500 },
+  { month: "Oct", locked: 35000, available: 0 },
+  { month: "Nov", locked: 35000, available: 0 },
+  { month: "Dec", locked: 35000, available: 0 },
+  { month: "Jan", locked: 35000, available: 0 },
+  { month: "Feb", locked: 35000, available: 0 },
+  { month: "Mar", locked: 35000, available: 0 },
 ];
 
 export const demoAdminUsers = [
