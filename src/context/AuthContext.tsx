@@ -31,8 +31,8 @@ export const useAuth = () => {
 
 const DEMO_USER: User = {
   id: "usr_8k2m4n6p",
-  email: "demo@eduvault.io",
-  name: "Alex Morgan",
+  email: "franklin.taipe",
+  name: "Franklin Taipe",
   role: "user",
   joinedAt: "2024-09-15T10:30:00Z",
   lastLogin: new Date().toISOString(),
