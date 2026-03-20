@@ -110,11 +110,6 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Disclaimer badge */}
-            <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning/10 text-warning text-xs font-medium border border-warning/20">
-              <Shield className="w-3 h-3" /> Simulation Only
-            </span>
-
             {/* Notifications */}
             <div className="relative">
               <button
