@@ -110,11 +110,6 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Disclaimer badge */}
-            <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning/10 text-warning text-xs font-medium border border-warning/20">
-              <Shield className="w-3 h-3" /> Simulation Only
-            </span>
-
             {/* Notifications */}
             <div className="relative">
               <button
@@ -157,12 +152,6 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         {/* Content */}
         <main className="flex-1 overflow-auto p-4 lg:p-8">
           {children}
-          {/* Global disclaimer */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-muted-foreground/50">
-              ⚠️ This is a simulated system for educational and demonstration purposes only. No real financial transactions occur.
-            </p>
-          </div>
         </main>
       </div>
     </div>

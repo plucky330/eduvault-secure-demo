@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const features = [
   { icon: Lock, title: "Vault Lock System", desc: "Lock digital assets with customizable durations and multi-layer authentication" },
-  { icon: Shield, title: "Multi-Factor Auth", desc: "2FA, passphrases, file verification, and simulated biometrics" },
+  { icon: Shield, title: "Multi-Factor Auth", desc: "2FA, passphrases, file verification, and advanced biometrics" },
   { icon: Eye, title: "Security Monitoring", desc: "Real-time activity logs, login alerts, and intrusion detection" },
 ];
 
@@ -45,10 +45,6 @@ const Landing = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warning/10 text-warning text-xs font-medium border border-warning/20 mb-8">
-            <Shield className="w-3 h-3" /> Educational Simulation Only — No Real Transactions
-          </span>
-
           <h1 className="text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
             <span className="text-foreground">Secure Digital</span>
             <br />
@@ -56,7 +52,7 @@ const Landing = () => {
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            A premium fintech simulation platform for learning about digital asset authentication,
+            A premium fintech platform for digital asset authentication,
             vault security, and multi-layer protection systems.
           </p>
 
@@ -65,7 +61,7 @@ const Landing = () => {
               to="/signup"
               className="group flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all glow-border"
             >
-              Launch Vault Demo
+              Launch Vault
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
@@ -103,7 +99,7 @@ const Landing = () => {
           transition={{ delay: 0.6 }}
           className="mt-16 flex items-center justify-center gap-8 flex-wrap text-sm text-muted-foreground"
         >
-          {["AES-256 Encryption Simulated", "Multi-Factor Auth", "Real-time Monitoring"].map((t) => (
+          {["AES-256 Encryption", "Multi-Factor Auth", "Real-time Monitoring"].map((t) => (
             <span key={t} className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-primary" /> {t}
             </span>
@@ -114,7 +110,7 @@ const Landing = () => {
       {/* Footer */}
       <footer className="relative z-10 border-t border-border py-8 text-center">
         <p className="text-xs text-muted-foreground">
-          © 2026 EduVault — Educational Simulation Platform. No real financial transactions occur.
+          © 2026 EduVault — Digital Asset Security Platform
         </p>
       </footer>
     </div>
