@@ -9,23 +9,31 @@ const Auth = () => {
   const location = useLocation();
   const isSignup = location.pathname === "/signup";
   const navigate = useNavigate();
-  const { login, signup, needs2FA, verify2FA } = useAuth();
+  const { login, needs2FA, verify2FA } = useAuth();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("franklin.taipe");
+  const [username, setUsername] = useState("franklin.taipe");
   const [password, setPassword] = useState("Peru@2030");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [otpValue, setOtpValue] = useState("");
+  const [signupError, setSignupError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    if (isSignup) {
+      await new Promise((r) => setTimeout(r, 1500));
+      setSignupError(true);
+      setLoading(false);
+      return;
+    }
+
     try {
-      const success = isSignup ? await signup(name, email, password) : await login(email, password);
-      if (!success) setError("Authentication failed. Please try again.");
+      const success = await login(username, password);
+      if (!success) setError("Invalid username or password.");
     } catch {
       setError("An error occurred.");
     }
@@ -36,7 +44,8 @@ const Auth = () => {
     if (verify2FA(otpValue)) {
       navigate("/dashboard");
     } else {
-      setError("Invalid code. Try any 6 digits.");
+      setError("Invalid authentication code.");
+      setOtpValue("");
     }
   };
 
@@ -56,7 +65,7 @@ const Auth = () => {
               <Shield className="w-7 h-7 text-primary" />
             </div>
             <h2 className="text-2xl font-bold text-foreground">Two-Factor Authentication</h2>
-            <p className="text-sm text-muted-foreground mt-2">Enter any 6-digit code to continue (simulation)</p>
+            <p className="text-sm text-muted-foreground mt-2">Enter your 6-digit authentication code</p>
           </div>
 
           <div className="flex justify-center mb-6">
@@ -87,6 +96,35 @@ const Auth = () => {
     );
   }
 
+  if (signupError) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
+        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="glass w-full max-w-md p-8 relative z-10 text-center"
+        >
+          <div className="w-14 h-14 rounded-2xl bg-destructive/10 flex items-center justify-center mx-auto mb-4">
+            <Shield className="w-7 h-7 text-destructive" />
+          </div>
+          <h2 className="text-2xl font-bold text-foreground mb-2">Registration Unavailable</h2>
+          <p className="text-sm text-muted-foreground mb-6">
+            This service is not available in your region. Please try again from a supported location.
+          </p>
+          <Link
+            to="/login"
+            className="inline-flex px-6 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+          >
+            Back to Sign In
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
       <div className="absolute inset-0 pointer-events-none">
@@ -108,7 +146,7 @@ const Auth = () => {
           </div>
           <h1 className="text-2xl font-bold text-foreground">{isSignup ? "Create Account" : "Welcome Back"}</h1>
           <p className="text-sm text-muted-foreground mt-2">
-            {isSignup ? "Start your EduVault demo" : "Sign in to your EduVault account"}
+            {isSignup ? "Create your EduVault account" : "Sign in to your EduVault account"}
           </p>
         </div>
 
@@ -118,23 +156,23 @@ const Auth = () => {
               <label className="text-sm font-medium text-foreground block mb-1.5">Full Name</label>
               <input
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-secondary border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                placeholder="Alex Morgan"
+                placeholder="Your full name"
                 required
               />
             </div>
           )}
 
           <div>
-            <label className="text-sm font-medium text-foreground block mb-1.5">Email</label>
+            <label className="text-sm font-medium text-foreground block mb-1.5">
+              {isSignup ? "Email" : "Username"}
+            </label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type={isSignup ? "email" : "text"}
+              value={isSignup ? "" : username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-3 rounded-lg bg-secondary border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-              placeholder="demo@eduvault.io"
+              placeholder={isSignup ? "you@example.com" : "Enter your username"}
               required
             />
           </div>
@@ -144,7 +182,7 @@ const Auth = () => {
             <div className="relative">
               <input
                 type={showPass ? "text" : "password"}
-                value={password}
+                value={isSignup ? "" : password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-secondary border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all pr-12"
                 placeholder="••••••••"
@@ -178,10 +216,6 @@ const Auth = () => {
           <Link to={isSignup ? "/login" : "/signup"} className="text-primary hover:underline font-medium">
             {isSignup ? "Sign In" : "Sign Up"}
           </Link>
-        </p>
-
-        <p className="text-center text-xs text-muted-foreground/50 mt-4">
-          ⚠️ Educational simulation — no real data is stored
         </p>
       </motion.div>
     </div>

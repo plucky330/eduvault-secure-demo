@@ -152,12 +152,6 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         {/* Content */}
         <main className="flex-1 overflow-auto p-4 lg:p-8">
           {children}
-          {/* Global disclaimer */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-muted-foreground/50">
-              ⚠️ This is a simulated system for educational and demonstration purposes only. No real financial transactions occur.
-            </p>
-          </div>
         </main>
       </div>
     </div>

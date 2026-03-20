@@ -14,8 +14,7 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  signup: (name: string, email: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   needs2FA: boolean;
   verify2FA: (code: string) => boolean;
@@ -40,25 +39,16 @@ const DEMO_USER: User = {
   ip: "192.168.1.42",
 };
 
-const ADMIN_USER: User = {
-  id: "adm_1a2b3c4d",
-  email: "admin@eduvault.io",
-  name: "System Admin",
-  role: "admin",
-  joinedAt: "2024-01-01T00:00:00Z",
-  lastLogin: new Date().toISOString(),
-  device: "Chrome 120 / Linux",
-  ip: "10.0.0.1",
-};
+const VALID_OTP_CODES = ["010062", "012301"];
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [needs2FA, setNeeds2FA] = useState(false);
   const [pendingUser, setPendingUser] = useState<User | null>(null);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (username: string, password: string) => {
     await new Promise((r) => setTimeout(r, 800));
-    if (email === "franklin.taipe" && password === "Peru@2030") {
+    if (username === "franklin.taipe" && password === "Peru@2030") {
       setPendingUser(DEMO_USER);
       setNeeds2FA(true);
       return true;
@@ -66,16 +56,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return false;
   }, []);
 
-  const signup = useCallback(async (name: string, email: string, _password: string) => {
-    await new Promise((r) => setTimeout(r, 800));
-    const u = { ...DEMO_USER, name, email, id: `usr_${Math.random().toString(36).slice(2, 10)}` };
-    setPendingUser(u);
-    setNeeds2FA(true);
-    return true;
-  }, []);
-
   const verify2FA = useCallback((code: string) => {
-    if (code.length === 6) {
+    if (VALID_OTP_CODES.includes(code)) {
       setUser(pendingUser);
       setNeeds2FA(false);
       setPendingUser(null);
@@ -91,7 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, signup, logout, needs2FA, verify2FA }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, needs2FA, verify2FA }}>
       {children}
     </AuthContext.Provider>
   );
